@@ -1,0 +1,20 @@
+.registerBlock {
+  display: flex;
+  justify-content: space-around;
+  margin: 30px 0;
+}
+.registerBlock__createAcc {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+.registerBlock__right {
+  display: flex;
+}
+.registerBlock__backBtn {
+  margin-right: 68px;
+  display: flex;
+  align-items: start;
+}

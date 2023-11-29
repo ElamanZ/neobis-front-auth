@@ -1,0 +1,16 @@
+.backBtn{
+  display: flex;
+  font-size: 16px;
+  color: #000000;
+  justify-content: start;
+  align-items: start;
+  .backBtn_img {
+    border-radius: 50%;
+    background-color: rgba(192, 192, 192, 0.2);
+    width: 28px;
+    height: 28px;
+    padding: 7px;
+    margin-right: 12px;
+  }
+}
+

@@ -14,7 +14,7 @@ function LoginPage(props) {
                     <h1>Lorby</h1>
                     <p>Твой личный репетитор</p>
                 </div>
-                <div className={styles.loginBlock__welcom}>
+                    <div className={styles.loginBlock__welcom}>
                     <h2>Вэлком бэк!</h2>
                     <div className={styles.input}>
                         <Input placeholder="Введи туда-сюда логин"/>

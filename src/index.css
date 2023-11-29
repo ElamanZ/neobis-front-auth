@@ -7,7 +7,8 @@
 
 body {
     background: #FFFFFF;
-    font-family: 'M PLUS 1p', sans-serif
+    font-family: 'M PLUS 1p', sans-serif;
+    color: #212121;
 }
 .container {
     width: 1440px;
@@ -23,6 +24,7 @@ h1{
     font-size: 48px;
     font-weight: 500;
     color: #212121;
+    margin: 40px 0 8px;
 }
 h2 {
     font-size: 32px;
