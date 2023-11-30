@@ -1,11 +1,25 @@
-import React from 'react';
+import React, {useState} from 'react';
 import stayAtHome from '../../assets/images/Stay at home.svg'
 import styles from './loginPage.module.scss'
-import Input from "../../components/UI/Input/input.jsx";
-import InputPassword from "../../components/UI/inputPassword/inputPassword.jsx";
-import Button from "../../components/UI/button/button.jsx";
+import eyeIcon from "../../assets/images/eyeIcon.svg";
+import eyeIconNoVisib from "../../assets/images/eyeIconVisib.svg";
 import {Link} from "react-router-dom";
+import {ToastContainer, toast} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css'
 function LoginPage(props) {
+
+    const notification = () => toast.error("Не верный логин или пароль!")
+
+    const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
+    const inputType = showPassword ? 'text' : 'password';
+    const handleChange = (e) => {
+        setPassword(e.target.value);
+    };
+
     return (
         <div className="container">
             <div className={styles.loginBlock}>
@@ -15,19 +29,45 @@ function LoginPage(props) {
                     <p>Твой личный репетитор</p>
                 </div>
                     <div className={styles.loginBlock__welcom}>
-                    <h2>Вэлком бэк!</h2>
-                    <div className={styles.input}>
-                        <Input placeholder="Введи туда-сюда логин"/>
-                    </div>
+                        <h2>Вэлком бэк!</h2>
+                            <input type="email" placeholder="Введи туда-сюда логин" className={styles.inputLogin}/>
+                            <div className={styles.inputPasswordBlock}>
+                                <input
+                                    type={inputType}
+                                    placeholder='Пароль (тоже введи)'
+                                    className={styles.inputPassword}
+                                    onChange={handleChange}
+                                    value={password}
+                                />
+                                <img
+                                    src={showPassword ? eyeIcon : eyeIconNoVisib}
+                                    alt="eyeIcon"
+                                    onClick={togglePasswordVisibility}
+                                    className={styles.inputImg}
+                                />
+                            </div>
+                            <button className={styles.button} onClick={notification}>
+                                Войти
+                            </button>
 
-                    <InputPassword placeholder="Пароль (тоже введи)"/>
-                    <div className={styles.button}>
-                        <Button buttonText="Войти"/>
-                    </div>
-
-                    <Link to='/register'>
-                        <p>У меня еще нет аккаунта</p>
-                    </Link>
+                            <Link to='/register'>
+                                <p>У меня еще нет аккаунта</p>
+                            </Link>
+                        <ToastContainer
+                            position="top-right"
+                            autoClose={5000}
+                            closeOnClick
+                            hideProgressBar={true}
+                            pauseOnFocusLoss
+                            draggable
+                            pauseOnHover
+                            theme="light"
+                            style={{
+                                right: '18em',
+                                width: '343px',
+                                height: '54px',
+                            }}
+                        />
                 </div>
             </div>
         </div>

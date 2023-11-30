@@ -2,13 +2,29 @@
   display: flex;
   justify-content: space-around;
   margin: 30px 0;
+  h2{
+    text-align: center ;
+  }
 }
 .registerBlock__createAcc {
-  text-align: center;
+  margin-top: 70px;
   display: flex;
-  align-items: center;
   flex-direction: column;
   justify-content: center;
+}
+.registerBlock__image {
+  margin-top: 70px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  img{
+    width: 480px;
+    height: 510px;
+  }
+  p {
+    font-size: 28px;
+    color: #212121;
+  }
 }
 .registerBlock__right {
   display: flex;
@@ -17,4 +33,77 @@
   margin-right: 68px;
   display: flex;
   align-items: start;
+}
+.registerBlock__form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.inputReg {
+  padding: 13px 16px;
+  border-radius: 12px;
+  width: 343px;
+  height: 52px;
+  background: #F8F8F8;
+  outline: none ;
+  border: none;
+  font-weight: 500;
+  font-size: 16px;
+  color: #212121;
+}
+.inputPassword {
+  padding: 13px 16px;
+  outline: none ;
+  border: 12px;
+  font-weight: 500;
+  font-size: 16px;
+  background-color: #F8F8F8;
+  color: #212121;
+  width: 305px;
+  height: 52px;
+}
+.inputPasswordBlock{
+  display: flex;
+  align-items: center;
+  border-radius: 12px;
+  width: 343px;
+  height: 52px;
+  background: #F8F8F8;
+  margin: 14px 0 6px;
+}
+.inputvalidation {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.inputImg {
+  cursor: pointer;
+}
+
+.button {
+  margin: 48px 0;
+  width: 343px;
+  height: 50px;
+  background: #292929;
+  color: #FFFFFF;
+  border: none;
+  outline: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+}
+.buttonDisabled {
+  margin: 48px 0;
+  width: 343px;
+  height: 50px;
+  background: #D7D7D7;
+  color: #767676;
+  border: none;
+  outline: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
 }
