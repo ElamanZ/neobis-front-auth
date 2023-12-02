@@ -5,6 +5,7 @@ import BackBtn from "../../components/UI/backBtn/backBtn.jsx";
 import { useForm } from "react-hook-form";
 import eyeIcon from "../../assets/images/eyeIcon.svg";
 import eyeIconNoVisib from "../../assets/images/eyeIconVisib.svg";
+import {Link} from "react-router-dom";
 
 function RegisterPage(props) {
 
@@ -116,7 +117,9 @@ function RegisterPage(props) {
                                     className={!isPasswordValid() || password !== passwordConfirmation? styles.buttonDisabled : styles.button}
                                     type="submit"
                             >
-                                Войти
+                                <Link to="/confirm">
+                                    Войти
+                                </Link>
                             </button>
                         </form>
                     </div>

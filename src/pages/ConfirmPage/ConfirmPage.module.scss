@@ -1,0 +1,90 @@
+.confirmBlock {
+  display: flex;
+  justify-content: space-around;
+  margin: 30px 0;
+  h2{
+    text-align: center ;
+  }
+}
+.confirmBlock__createAcc {
+  margin-top: 70px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 421px;
+  text-align: center;
+
+  h3 {
+    font-weight: 500;
+    font-size: 24px;
+  }
+
+  p {
+    font-weight: 500;
+    font-size: 20px;
+    color: #767676;
+    padding: 48px 54px 61px;
+    b {
+      color: #212121;
+    }
+  }
+
+  button {
+    outline: none;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 18px;
+    color: #212121;
+
+  }
+}
+.confirmBlock__image {
+  margin-top: 70px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  img{
+    width: 480px;
+    height: 510px;
+  }
+  p {
+    font-size: 28px;
+    color: #212121;
+  }
+}
+.confirmBlock__right {
+  display: flex;
+}
+.confirmBlock__backBtn {
+  margin-right: 68px;
+  display: flex;
+  align-items: start;
+}
+
+.modalBlock {
+  text-align: center;
+  h3 {
+    font-weight: 500;
+    font-size: 20px;
+  }
+  p {
+    margin: 24px 0;
+    font-weight: 500;
+    font-size: 16px;
+    color: #767676;
+  }
+  button {
+    width: 311px;
+    height: 50px;
+    background: #292929;
+    color: #FFFFFF;
+    border: none;
+    outline: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+  }
+}
