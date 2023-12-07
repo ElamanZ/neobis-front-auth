@@ -6,8 +6,11 @@ import { useForm } from "react-hook-form";
 import eyeIcon from "../../assets/images/eyeIcon.svg";
 import eyeIconNoVisib from "../../assets/images/eyeIconVisib.svg";
 import {Link} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import { registerUser } from '../../store/registerSlice.js';
 
 function RegisterPage(props) {
+    const dispatch = useDispatch();
 
     const {
         register,
@@ -17,7 +20,8 @@ function RegisterPage(props) {
     } = useForm();
 
     const onSubmit = (data) => {
-        console.log(data);
+        dispatch(registerUser(data));
+        console.log("все ок", data)
     };
 
     const password = watch('password', '');
