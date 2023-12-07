@@ -1,17 +1,41 @@
-import React from 'react';
-import styles from "../ConfirmPage/ConfirmPage.module.scss";
+import React, { useState, useEffect } from 'react';
+import styles from "./SendMessagePage.module.scss";
 import stayAtHome from "../../assets/images/Stay at home.svg";
 import BackBtn from "../../components/UI/backBtn/backBtn.jsx";
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+function SendMessagePage(props) {
+    const [open, setOpen] = useState(false);
 
 
-function ConfirmPage(props) {
-    const exampleEmail = 'example@gmail.com'
+    const [timer, setTimer] = useState(60);
+    const [canClick, setCanClick] = useState(false);
 
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
+    useEffect(() => {
+        let interval;
+
+        interval = setInterval(() => {
+            setTimer((prevTimer) => {
+                if (prevTimer > 0) {
+                    return prevTimer - 1;
+                } else {
+                    clearInterval(interval);
+                    setCanClick(true);
+                    return prevTimer;
+                }
+            });
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, [canClick]);
+
+    const handleOpen = () => {
+        console.log('Письмо не пришло');
+        setCanClick(false);
+        setTimer(60);
+    };
+
+
     const handleClose = () => setOpen(false);
 
 
@@ -43,12 +67,18 @@ function ConfirmPage(props) {
                         <BackBtn/>
                     </div>
                     <div className={styles.confirmBlock__createAcc}>
-                        <h3>Выслали письмо со ссылкой для завершения регистрации на {exampleEmail}</h3>
+                        <h3>Выслали письмо со ссылкой для завершения регистрации на {'ex@mail'}</h3>
                         <p>Если письмо не пришло, не спеши ждать совиную почту - лучше <b>проверь ящик “Спам”
                             <br/><br/>
                             (´｡• ω •｡`)</b>
                         </p>
-                        <button onClick={handleOpen}>Письмо не пришло</button>
+                        <div>
+                            {canClick ? (
+                                <button onClick={handleOpen}>Письмо не пришло</button>
+                            ) : (
+                                <p>Подождите {timer} сек</p>
+                            )}
+                        </div>
                     </div>
                 </div>
                 <Modal
@@ -59,7 +89,7 @@ function ConfirmPage(props) {
                 >
                     <Box sx={style}>
                         <div className={styles.modalBlock}>
-                            <h3>Мы выслали еще одно письмо на указанную тобой почту {exampleEmail}</h3>
+                            <h3>Мы выслали еще одно письмо на указанную тобой почту {'exampleEmail'}</h3>
                             <p>Не забудь проверить<br/>
                                 ящик “Спам”!!!!!!!</p>
                             <button onClick={handleClose}>Понятно!!!</button>
@@ -71,4 +101,4 @@ function ConfirmPage(props) {
     );
 }
 
-export default ConfirmPage;
+export default SendMessagePage;

@@ -5,13 +5,14 @@ import BackBtn from "../../components/UI/backBtn/backBtn.jsx";
 import { useForm } from "react-hook-form";
 import eyeIcon from "../../assets/images/eyeIcon.svg";
 import eyeIconNoVisib from "../../assets/images/eyeIconVisib.svg";
-import {Link} from "react-router-dom";
 import {useDispatch} from "react-redux";
-import { registerUser } from '../../store/registerSlice.js';
+import { registerUser } from '../../store/authSlice.js';
+import { useNavigate } from 'react-router-dom';
 
 function RegisterPage(props) {
-    const dispatch = useDispatch();
 
+    const dispatch = useDispatch();
+    const navigate = useNavigate()
     const {
         register,
         handleSubmit,
@@ -19,10 +20,32 @@ function RegisterPage(props) {
         watch,
     } = useForm();
 
-    const onSubmit = (data) => {
-        dispatch(registerUser(data));
-        console.log("все ок", data)
+    const onSubmit = async (data) => {
+        const userData = {
+            email: data.email,
+            username: data.login,
+            password: data.password,
+        };
+        try {
+            const actionResult = await dispatch(registerUser(userData));
+            const { payload } = actionResult;
+
+            if (registerUser.fulfilled.match(actionResult)) {
+                // Регистрация прошла успешно, переход на другую страницу
+                navigate('/send-message');
+                console.log("Всё ок", userData);
+            } else {
+                // Обработка других возможных ошибок
+                console.error('Данная почта уже зарегистрирована:', payload);
+                // Отобразить сообщение об ошибке, если нужно
+            }
+        } catch (error) {
+            console.error('Ошибка при отправке данных:', error);
+            // Дополнительная обработка ошибок при выполнении запроса
+        }
     };
+
+
 
     const password = watch('password', '');
     const passwordConfirmation = watch('passwordConfirmation', '');
@@ -121,9 +144,8 @@ function RegisterPage(props) {
                                     className={!isPasswordValid() || password !== passwordConfirmation? styles.buttonDisabled : styles.button}
                                     type="submit"
                             >
-                                <Link to="/confirm">
-                                    Войти
-                                </Link>
+                                Войти
+
                             </button>
                         </form>
                     </div>
