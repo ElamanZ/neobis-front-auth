@@ -10,7 +10,12 @@ export const registerUser  = createAsyncThunk(
 
             if (response.status === 200) {
                 return response.data;
-            } else {
+
+            }else if (response.status === 302) {
+                throw new Error('Данная почта уже зарегистрирована');
+            }
+
+            else {
                 throw new Error(`Error ${response.status}`);
             }
         } catch (error) {
@@ -37,6 +42,7 @@ const authSlice = createSlice({
         });
         builder.addCase(registerUser.rejected, (state, action) => {
             state.error = action.payload;
+            alert(action.payload);
         });
     },
 });
