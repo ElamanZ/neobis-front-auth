@@ -5,6 +5,7 @@ import RegisterPage from "../pages/RegisterPage/RegisterPage.jsx";
 import LoggedInPage from "../pages/LoggedInPage/LoggedInPage.jsx";
 import SendMessagePage from "../pages/SendMessagePage/SendMessagePage.jsx";
 import WelcomPage from "../pages/WelcomPage/WelcomPage.jsx";
+import ConfirmPage from "../pages/ConfirmPage/ConfirmPage.jsx";
 
 
 const Routers = () => {
@@ -15,6 +16,7 @@ const Routers = () => {
             <Route path="/loggedIn" element={<LoggedInPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/send-message" element={<SendMessagePage />} />
+            <Route path="/confirm" element={<ConfirmPage />} />
             <Route path="/welcom" element={<WelcomPage />} />
         </Routes>
     );

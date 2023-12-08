@@ -33,6 +33,7 @@ function RegisterPage(props) {
             if (registerUser.fulfilled.match(actionResult)) {
                 // Регистрация прошла успешно, переход на другую страницу
                 navigate('/send-message');
+                localStorage.setItem('userData', JSON.stringify(userData));
                 console.log("Всё ок", userData);
             } else {
                 // Обработка других возможных ошибок
