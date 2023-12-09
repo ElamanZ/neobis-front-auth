@@ -141,7 +141,7 @@ function RegisterPage(props) {
                                     className={!isPasswordValid() || password !== passwordConfirmation? styles.buttonDisabled : styles.button}
                                     type="submit"
                             >
-                                Войти
+                                Далле
 
                             </button>
                         </form>

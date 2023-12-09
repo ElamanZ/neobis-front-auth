@@ -15,19 +15,17 @@ function SendMessagePage(props) {
     const [open, setOpen] = useState(false);
     const [timer, setTimer] = useState(60);
     const [canClick, setCanClick] = useState(false);
-    const [shouldSendMessage, setShouldSendMessage] = useState(true);
 
     useEffect(() => {
-        if (shouldSendMessage && userData && userData.email) {
-            dispatch(
-                sendMessage({
-                    email: userData.email,
-                    username: userData.username,
-                    password: userData.password,
-                })
-            );
-            setShouldSendMessage(false);
-        }
+
+        dispatch(
+                    sendMessage({
+                        email: userData.email,
+                        username: userData.username,
+                        password: userData.password,
+                    })
+                );
+
 
         let interval;
         if (!canClick) {
@@ -45,13 +43,13 @@ function SendMessagePage(props) {
         }
 
         return () => clearInterval(interval);
-    }, [canClick, dispatch, shouldSendMessage, userData]);
+
+    }, [canClick, dispatch]);
 
     const handleOpen = () => {
         console.log('Письмо не пришло');
         setCanClick(false);
         setTimer(60);
-        setShouldSendMessage(true);
         setOpen(true)
     };
 
