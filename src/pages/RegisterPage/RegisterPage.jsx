@@ -31,18 +31,14 @@ function RegisterPage(props) {
             const { payload } = actionResult;
 
             if (registerUser.fulfilled.match(actionResult)) {
-                // Регистрация прошла успешно, переход на другую страницу
                 navigate('/send-message');
                 localStorage.setItem('userData', JSON.stringify(userData));
                 console.log("Всё ок", userData);
             } else {
-                // Обработка других возможных ошибок
                 console.error('Данная почта уже зарегистрирована:', payload);
-                // Отобразить сообщение об ошибке, если нужно
             }
         } catch (error) {
             console.error('Ошибка при отправке данных:', error);
-            // Дополнительная обработка ошибок при выполнении запроса
         }
     };
 

@@ -10,28 +10,15 @@ function ConfirmPage(props) {
     const location = useLocation();
     const navigate = useNavigate();
 
+
     useEffect(() => {
         const searchParams = new URLSearchParams(location.search);
         const token = searchParams.get('token');
 
-        console.log(token)
         if (token) {
-            dispatch(confirm(token))
-                .then((response) => {
-                    // Перенаправление на страницу /welcome при успешном подтверждении
-                    if (response.payload && response.payload.success) {
-                        navigate('/welcome');
-                    } else {
-                        // Обработка ошибки и вывод на страницу
-                        alert('Ошибка при подтверждении регистрации');
-                    }
-                })
-                .catch((error) => {
-                    alert('Ошибка при отправке запроса');
-                    console.error(error);
-                });
+            dispatch(confirm({ token, navigate }));
         }
-    }, [dispatch, navigate, location.search]);
+    }, [location.search]);
 
     return (
         <div className="container">

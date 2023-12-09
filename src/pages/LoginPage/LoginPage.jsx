@@ -6,14 +6,14 @@ import eyeIconNoVisib from "../../assets/images/eyeIconVisib.svg";
 import {Link, useNavigate} from "react-router-dom";
 import {ToastContainer, toast} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css'
-import { signIn } from '../../store/authSlice';
+import {signIn} from '../../store/authSlice';
 
 import {useDispatch} from "react-redux";
 
 function LoginPage(props) {
 
     const notification = () => toast.error("Не верный логин или пароль!")
-
+    const navigate = useNavigate()
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('')
     const [showPassword, setShowPassword] = useState(false);
@@ -25,27 +25,18 @@ function LoginPage(props) {
         setPassword(e.target.value);
     };
     const dispatch = useDispatch()
-    const navigate = useNavigate()
     const handleLogin = async () => {
-        // Создание объекта, который будет передан в signIn
         const signInData = {
-            username: username, // Значение из инпута для email
-            password: password, // Значение из инпута для password
+            username: username,
+            password: password,
         };
 
-        try {
-            const response = await dispatch(signIn(signInData));
+        const response = await dispatch(signIn({signInData, navigate}));
 
-            if (response.payload.status === 200) {
-                navigate('/loggedIn');
-                console.log('Logged In Successfully');
-            } else {
-                notification();
-            }
-        } catch (error) {
-            notification()
+        if (response.payload && response.payload.isError) {
+            notification();
         }
-    };
+    }
 
 
     return (

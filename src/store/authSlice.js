@@ -28,20 +28,22 @@ export const registerUser  = createAsyncThunk(
 
 export const signIn = createAsyncThunk(
     'auth/signIn',
-    async function (signIn, { dispatch, rejectWithValue }) {
+    async function ({signInData, navigate}, { dispatch, rejectWithValue }) {
         try {
-            const response = await axios.post('https://backend-production-aaf6.up.railway.app/api/v1/auth/authenticate', signIn);
+            const response = await axios.post('https://backend-production-aaf6.up.railway.app/api/v1/auth/authenticate', signInData);
 
             if (response.status === 200) {
+                navigate("/loggedIn");
                 return response.data;
             } else {
-                throw new Error(`Error ${response.status}`);
+                return { error: `Error ${response.status}`, isError: true };
             }
         } catch (error) {
-            return rejectWithValue(error.message);
+            return { error: error.message, isError: true }
         }
     }
 );
+
 
 
 export const sendMessage = createAsyncThunk(
@@ -63,11 +65,12 @@ export const sendMessage = createAsyncThunk(
 
 export const confirm = createAsyncThunk(
     'auth/confirm',
-    async function (token, { dispatch, rejectWithValue }) {
+    async function ({ token, navigate }, { dispatch, rejectWithValue }) {
         try {
-            const response = await axios.post(`https://backend-production-aaf6.up.railway.app/api/v1/auth/registerConfirm?token=${token}`, token);
+            const response = await axios.post(`https://backend-production-aaf6.up.railway.app/api/v1/auth/registerConfirm?token=${token}`);
 
             if (response.status === 200) {
+                navigate("/welcome");
                 return response.data;
             } else {
                 throw new Error(`Error ${response.status}`);
@@ -90,6 +93,7 @@ const authSlice = createSlice({
         },
         error: '',
     },
+
     extraReducers: (builder) => {
         builder.addCase(registerUser.fulfilled, (state, action) => {
             state.form = action.payload;
@@ -111,6 +115,14 @@ const authSlice = createSlice({
         builder.addCase(signIn.rejected, (state, action) => {
             state.error = action.payload;
             alert("Вы не подтвердили аккаунт или неправильный пароль!");
+        });
+        builder.addCase(confirm.fulfilled, (state, action) => {
+            state.form = action.payload;
+            alert('Вы успешно подтвердили свой аккаунт')
+        });
+        builder.addCase(confirm.rejected, (state, action) => {
+            state.error = action.payload;
+            alert('Произошла ошибка при подтверждении почты')
         })
     },
 });

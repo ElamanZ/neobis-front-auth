@@ -5,7 +5,7 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import {Link} from "react-router-dom";
 
-function WelcomPage(props) {
+function WelcomePage(props) {
 
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
@@ -62,4 +62,4 @@ function WelcomPage(props) {
     );
 }
 
-export default WelcomPage;
+export default WelcomePage;
