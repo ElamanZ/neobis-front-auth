@@ -1,6 +1,6 @@
 # ReadMe для проекта "Lorby-Auth"
 
-## Ссылка: https://the-meal-app-five.vercel.app/home
+## Ссылка: https://neobis-front-auth-rosy.vercel.app/
 
 ![image](https://github.com/ElamanZ/neobis-front-auth/assets/110537470/5d4620c4-59eb-4ded-a268-01ba82af73a3)
 
