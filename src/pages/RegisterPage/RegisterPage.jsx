@@ -9,7 +9,7 @@ import {useDispatch} from "react-redux";
 import { registerUser } from '../../store/authSlice.js';
 import { useNavigate } from 'react-router-dom';
 
-function RegisterPage(props) {
+function RegisterPage({login}) {
 
     const dispatch = useDispatch();
     const navigate = useNavigate()
@@ -20,6 +20,9 @@ function RegisterPage(props) {
         watch,
     } = useForm();
 
+
+
+
     const onSubmit = async (data) => {
         const userData = {
             email: data.email,
@@ -27,10 +30,18 @@ function RegisterPage(props) {
             password: data.password,
         };
         try {
+            const isUserNameValid = usernameRegex.test(data.login);
+
+            if (!isUserNameValid) {
+                return alert('Логин не должен состоять только из символов!');
+
+            }
+
             const actionResult = await dispatch(registerUser(userData));
             const { payload } = actionResult;
 
             if (registerUser.fulfilled.match(actionResult)) {
+                login(userData)
                 navigate('/send-message');
                 localStorage.setItem('userData', JSON.stringify(userData));
                 console.log("Всё ок", userData);
@@ -64,10 +75,15 @@ function RegisterPage(props) {
     const hasNumber = /\d/.test(password);
     const hasSpecialChar = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password);
     const isPasswordMatch = password === passwordConfirmation;
-
+    const usernameRegex = /[a-zA-Z0-9]+/
     const isPasswordValid = () => {
         return isValidLength && hasLowerAndUpper && hasNumber && hasSpecialChar && isPasswordMatch;
     };
+
+    const btnStyleConst = !isPasswordValid() || password !== passwordConfirmation
+    const checkValid = (validName) => {
+        return !validName && password !== "" ? 'red' : errors.exampleRequired ? 'red' : password !== '' ? 'green' : 'gray'
+    }
 
     return (
         <div className='container'>
@@ -86,9 +102,19 @@ function RegisterPage(props) {
 
                         <form onSubmit={handleSubmit(onSubmit)} className={styles.registerBlock__form}>
                             <div style={{ marginTop: '48px', marginBottom: '14px'}}>
-                                <input {...register('email')} type="email" placeholder="Введи адрес почты" className={styles.inputReg}/>
+                                <input
+                                    {...register('email')}
+                                    type="email"
+                                    placeholder="Введи адрес почты"
+                                    className={styles.inputReg}
+
+                                />
                             </div>
-                            <input {...register('login')} placeholder="Придумай логин" className={styles.inputReg}/>
+                            <input
+                                {...register('login',)}
+                                placeholder="Придумай логин"
+                                className={styles.inputReg}
+                            />
                             <div className={styles.inputPasswordBlock}>
 
                                 <input
@@ -105,17 +131,17 @@ function RegisterPage(props) {
                                     className={styles.inputImg}
                                 />
                             </div>
-                            <ul className={styles.inputvalidation}>
-                                <li style={{ color: !isValidLength && password !== "" ? 'red' : errors.exampleRequired ? 'red' : password !== '' ? 'green' : 'gray' }}>
+                            <ul className={styles.inputValidation}>
+                                <li style={{ color: checkValid(isValidLength)}}>
                                     От 8 до 15 символов
                                 </li>
-                                <li style={{ color: !hasLowerAndUpper && password !== "" ? 'red' : errors.exampleRequired ? 'red' : password !== '' ? 'green' : 'gray' }}>
+                                <li style={{ color: checkValid(hasLowerAndUpper)}}>
                                     Строчные и прописные буквы
                                 </li>
-                                <li style={{ color: !hasNumber && password !== "" ? 'red' : errors.exampleRequired ? 'red' : password !== '' ? 'green' : 'gray' }}>
+                                <li style={{ color: checkValid(hasNumber)}}>
                                     Минимум 1 цифра
                                 </li>
-                                <li style={{ color: !hasSpecialChar && password !== "" ? 'red' : errors.exampleRequired ? 'red' : password !== '' ? 'green' : 'gray' }}>
+                                <li style={{ color: checkValid(hasSpecialChar)}}>
                                     Минимум 1 спецсимвол (!, ", #, $...)
                                 </li>
                             </ul>
@@ -137,11 +163,11 @@ function RegisterPage(props) {
                             </div>
 
 
-                            <button disabled={!isPasswordValid() || password !== passwordConfirmation}
-                                    className={!isPasswordValid() || password !== passwordConfirmation? styles.buttonDisabled : styles.button}
+                            <button disabled={btnStyleConst}
+                                    className={btnStyleConst? styles.buttonDisabled : styles.button}
                                     type="submit"
                             >
-                                Далле
+                                Далeе
 
                             </button>
                         </form>

@@ -39,7 +39,7 @@ export const signIn = createAsyncThunk(
                 return { error: `Error ${response.status}`, isError: true };
             }
         } catch (error) {
-            return { error: error.message, isError: true }
+            return rejectWithValue(error.message, {isError: true});
         }
     }
 );
@@ -50,7 +50,8 @@ export const sendMessage = createAsyncThunk(
     'auth/sendMessage',
     async function (messageData, { dispatch, rejectWithValue }) {
         try {
-            const response = await axios.post('https://backend-production-aaf6.up.railway.app/api/v1/auth/send-message?link=https://neobis-front-auth-rosy.vercel.app/confirm', messageData);
+            // const response = await axios.post('https://backend-production-aaf6.up.railway.app/api/v1/auth/send-message?link=https://neobis-front-auth-rosy.vercel.app/confirm', messageData);
+            const response = await axios.post('https://backend-production-aaf6.up.railway.app/api/v1/auth/send-message?link=http://localhost:3000/confirm', messageData);
 
             if (response.status === 200) {
                 return response.data;
@@ -70,7 +71,7 @@ export const confirm = createAsyncThunk(
             const response = await axios.post(`https://backend-production-aaf6.up.railway.app/api/v1/auth/registerConfirm?token=${token}`);
 
             if (response.status === 200) {
-                navigate("/welcome");
+                navigate("/login");
                 return response.data;
             } else {
                 throw new Error(`Error ${response.status}`);
@@ -114,7 +115,7 @@ const authSlice = createSlice({
         });
         builder.addCase(signIn.rejected, (state, action) => {
             state.error = action.payload;
-            alert("Вы не подтвердили аккаунт или неправильный пароль!");
+            alert("Такого пользователя нет или неправильный пароль!");
         });
         builder.addCase(confirm.fulfilled, (state, action) => {
             state.form = action.payload;

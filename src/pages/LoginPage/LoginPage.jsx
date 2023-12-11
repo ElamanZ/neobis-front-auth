@@ -12,7 +12,7 @@ import {useDispatch} from "react-redux";
 
 function LoginPage(props) {
 
-    const notification = () => toast.error("Не верный логин или пароль!")
+    const btnText = 'Войти'
     const navigate = useNavigate()
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('')
@@ -21,6 +21,14 @@ function LoginPage(props) {
         setShowPassword(!showPassword);
     };
     const inputType = showPassword ? 'text' : 'password';
+
+    const notification = () => {
+        if (username === '' || password === ''){
+            return toast.error("Заполните данные")
+        }
+        return toast.error("Не верный логин или пароль!")
+    }
+
     const handleChange = (e) => {
         setPassword(e.target.value);
     };
@@ -31,12 +39,21 @@ function LoginPage(props) {
             password: password,
         };
 
-        const response = await dispatch(signIn({signInData, navigate}));
+        try {
+            const response = await dispatch(signIn({ signInData, navigate }));
 
-        if (response.payload && response.payload.isError) {
+            if (response.payload && !response.payload.isError) {
+                const token = response.payload.token;
+                localStorage.setItem('token', token);
+                navigate("/loggedIn");
+            } else {
+                notification();
+            }
+        } catch (error) {
+            console.error("Произошла ошибка:", error);
             notification();
         }
-    }
+    };
 
 
     return (
@@ -72,7 +89,7 @@ function LoginPage(props) {
                                 />
                             </div>
                             <button className={styles.button} onClick={handleLogin}>
-                                Войти
+                                {btnText}
                             </button>
 
                             <Link to='/register'>

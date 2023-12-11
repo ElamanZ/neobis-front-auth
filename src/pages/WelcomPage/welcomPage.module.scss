@@ -29,6 +29,15 @@
   color: #212121;
   margin-top: 40px;
 }
+.btnNoBorderModal {
+  outline: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 16px;
+  color: #212121;
+}
 
 .modalBlock {
   display: flex;

@@ -62,6 +62,7 @@
   color: #212121;
   width: 305px;
   height: 52px;
+  z-index: 10;
 }
 .inputPasswordBlock{
   display: flex;
@@ -72,10 +73,12 @@
   background: #F8F8F8;
   margin: 14px 0 6px;
 }
-.inputvalidation {
+.inputValidation {
   font-weight: 500;
   font-size: 14px;
 }
+
+
 
 .inputImg {
   cursor: pointer;

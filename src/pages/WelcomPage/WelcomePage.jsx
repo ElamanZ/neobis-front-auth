@@ -1,16 +1,21 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import styles from "../WelcomPage/welcomPage.module.scss";
 import stayAtHomeIcon from "../../assets/images/Stay at home.svg";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
-function WelcomePage(props) {
-
+function WelcomePage({currentUser, text, logout}) {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    const navigate = useNavigate()
 
+    useEffect(() => {
+        if (!currentUser) {
+            navigate('/login')
+        }
+    }, [currentUser]);
 
     const style = {
         position: 'absolute',
@@ -31,7 +36,7 @@ function WelcomePage(props) {
     return (
         <div className="container">
             <div className={styles.welcom}>
-                <h2>Добро пожаловать!</h2>
+                <h2>{text}</h2>
                 <p>Lorby - твой личный репетитор</p>
                 <img src={stayAtHomeIcon} alt="stayAtHomeIcon"/>
                 <button
@@ -52,8 +57,8 @@ function WelcomePage(props) {
                     <div className={styles.modalBlock}>
                         <h3>Выйти?</h3>
                         <p>Точно выйти?</p>
-                        <button className={styles.btnBlack}> <Link to={'/login'}>Да, точно</Link></button>
-                        <button onClick={handleClose} className={styles.btnNoBorder}>Нет, остаться</button>
+                        <button className={styles.btnBlack}> <Link to={'/login'} onClick={logout}>Да, точно</Link></button>
+                        <button onClick={handleClose} className={styles.btnNoBorderModal}>Нет, остаться</button>
                     </div>
                 </Box>
             </Modal>

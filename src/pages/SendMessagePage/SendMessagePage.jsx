@@ -6,8 +6,9 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import { useDispatch } from 'react-redux';
 import { sendMessage } from '../../store/authSlice.js';
+import {useNavigate} from "react-router-dom";
 
-function SendMessagePage(props) {
+function SendMessagePage({currentUser}) {
     const dispatch = useDispatch();
     const userDataString = localStorage.getItem('userData');
     const userData = JSON.parse(userDataString);
@@ -16,7 +17,12 @@ function SendMessagePage(props) {
     const [timer, setTimer] = useState(60);
     const [canClick, setCanClick] = useState(false);
 
+    const [isMessageSent, setIsMessageSent] = useState(false);
+    const navigate = useNavigate()
     useEffect(() => {
+        if(!currentUser) {
+            navigate('/login')
+        }
 
         dispatch(
                     sendMessage({
@@ -36,6 +42,7 @@ function SendMessagePage(props) {
                     } else {
                         clearInterval(interval);
                         setCanClick(true);
+                        setIsMessageSent(false);
                         return prevTimer;
                     }
                 });
@@ -44,13 +51,13 @@ function SendMessagePage(props) {
 
         return () => clearInterval(interval);
 
-    }, [canClick, dispatch]);
+    }, [ isMessageSent, currentUser]);
 
     const handleOpen = () => {
-        console.log('Письмо не пришло');
         setCanClick(false);
         setTimer(60);
         setOpen(true)
+        setIsMessageSent(true);
     };
 
     const handleClose = () => setOpen(false);

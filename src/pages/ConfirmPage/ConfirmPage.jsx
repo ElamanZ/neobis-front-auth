@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { confirm } from '../../store/authSlice';
 
-function ConfirmPage(props) {
+function ConfirmPage({currentUser}) {
     const dispatch = useDispatch();
     const location = useLocation();
     const navigate = useNavigate();
@@ -18,8 +18,11 @@ function ConfirmPage(props) {
         if (token) {
             dispatch(confirm({ token, navigate }));
         }
-    }, [location.search]);
+        if (!currentUser) {
+            navigate('/login')
+        }
 
+    }, [location.search, currentUser]);
     return (
         <div className="container">
             <div className={styles.loading}>

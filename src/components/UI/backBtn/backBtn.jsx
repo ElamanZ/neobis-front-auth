@@ -7,8 +7,8 @@ function BackBtn(props) {
         <div className={styles.backBtn}>
             <Link to='/login'>
                 <img src={backIcon} alt="backIcon" className={styles.backBtn_img}/>
+                Назад
             </Link>
-            <Link to='/login'>Назад</Link>
         </div>
     );
 }
