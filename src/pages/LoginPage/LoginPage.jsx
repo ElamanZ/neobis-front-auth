@@ -40,7 +40,7 @@ function LoginPage(props) {
         };
 
         try {
-            const response = await dispatch(signIn({ signInData, navigate }));
+            const response = await dispatch(signIn({ signInData, navigate, notification }));
 
             if (response.payload && !response.payload.isError) {
                 const token = response.payload.token;

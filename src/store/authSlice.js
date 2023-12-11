@@ -28,7 +28,7 @@ export const registerUser  = createAsyncThunk(
 
 export const signIn = createAsyncThunk(
     'auth/signIn',
-    async function ({signInData, navigate}, { dispatch, rejectWithValue }) {
+    async function ({signInData, navigate, notification}, { dispatch, rejectWithValue }) {
         try {
             const response = await axios.post('https://backend-production-aaf6.up.railway.app/api/v1/auth/authenticate', signInData);
 
@@ -36,9 +36,11 @@ export const signIn = createAsyncThunk(
                 navigate("/loggedIn");
                 return response.data;
             } else {
+                notification()
                 return { error: `Error ${response.status}`, isError: true };
             }
         } catch (error) {
+            notification()
             return rejectWithValue(error.message, {isError: true});
         }
     }
@@ -50,8 +52,8 @@ export const sendMessage = createAsyncThunk(
     'auth/sendMessage',
     async function (messageData, { dispatch, rejectWithValue }) {
         try {
-            // const response = await axios.post('https://backend-production-aaf6.up.railway.app/api/v1/auth/send-message?link=https://neobis-front-auth-rosy.vercel.app/confirm', messageData);
-            const response = await axios.post('https://backend-production-aaf6.up.railway.app/api/v1/auth/send-message?link=http://localhost:3000/confirm', messageData);
+            const response = await axios.post('https://backend-production-aaf6.up.railway.app/api/v1/auth/send-message?link=https://neobis-front-auth-rosy.vercel.app/confirm', messageData);
+            // const response = await axios.post('https://backend-production-aaf6.up.railway.app/api/v1/auth/send-message?link=http://localhost:3000/confirm', messageData);
 
             if (response.status === 200) {
                 return response.data;
